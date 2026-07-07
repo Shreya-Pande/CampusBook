@@ -1,0 +1,10 @@
+{
+  "watch": ["server.js", "worker.js", "src", "../.env"],
+  "ext": "js,json",
+  "ignore": ["src/**/*.test.js", "tests/*", "logs/*", "node_modules/*"],
+  "delay": 500,
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "verbose": false
+}
