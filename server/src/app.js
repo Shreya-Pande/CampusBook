@@ -9,6 +9,7 @@ import { ApiResponse } from './utils/apiResponse.js'
 import { AppError } from './utils/errors.js'
 import { globalLimiter } from './middleware/rateLimit.middleware.js'
 import authRoutes from './routes/auth.routes.js'
+import timetableRoutes from './routes/timetable.routes.js'
 
 const app = express()
 
@@ -43,9 +44,10 @@ app.get('/api/health', (req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/timetable', timetableRoutes)
 
-// Remaining domain routes (portal, resource, timetable, booking, admin,
-// waitlist, notification) are mounted here as each phase implements them.
+// Remaining domain routes (portal, resource, booking, admin, waitlist,
+// notification) are mounted here as each phase implements them.
 
 app.use((req, res) => {
   return ApiResponse.error(res, `Route ${req.originalUrl} not found`, 404)

@@ -20,3 +20,13 @@ export const deptFilter = (req, res, next) => {
     req.user?.adminType === 'super_admin' ? {} : { assignedApproverId: req.user?.id }
   next()
 }
+
+// Stricter than authorize('super_admin') alone — layers on top of a role
+// check (e.g. authorize('admin')) so HODs/department_admins are explicitly
+// rejected from super-admin-only routes like timetable writes.
+export const isSuperAdmin = (req, res, next) => {
+  if (req.user?.adminType !== 'super_admin') {
+    throw new ForbiddenError('Super admin access required')
+  }
+  next()
+}

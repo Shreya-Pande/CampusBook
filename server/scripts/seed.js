@@ -115,124 +115,44 @@ const seedTimetable = async (resources) => {
   const academicYear = '2025-26'
   const effectiveFrom = new Date('2025-08-01')
 
+  // One entry per weekday per resource — full Monday-Friday coverage on
+  // each of the 4 seeded resources.
   const entries = [
-    {
-      resourceId: byName['Classroom 101'],
-      dayOfWeek: 'Monday',
-      startTime: '09:00',
-      endTime: '10:00',
-      subject: 'Data Structures',
-      classSection: 'CSE-2A',
-      facultyName: 'Dr. Sharma',
-      semester: 3,
-    },
-    {
-      resourceId: byName['Classroom 101'],
-      dayOfWeek: 'Monday',
-      startTime: '10:00',
-      endTime: '11:00',
-      subject: 'Algorithms',
-      classSection: 'CSE-2A',
-      facultyName: 'Dr. Verma',
-      semester: 3,
-    },
-    {
-      resourceId: byName['Classroom 101'],
-      dayOfWeek: 'Wednesday',
-      startTime: '09:00',
-      endTime: '10:00',
-      subject: 'DBMS',
-      classSection: 'CSE-2B',
-      facultyName: 'Dr. Rao',
-      semester: 3,
-    },
-    {
-      resourceId: byName['Classroom 202'],
-      dayOfWeek: 'Tuesday',
-      startTime: '09:00',
-      endTime: '10:00',
-      subject: 'Java Programming',
-      classSection: 'IT-2A',
-      facultyName: 'Prof. Iyer',
-      semester: 3,
-    },
-    {
-      resourceId: byName['Classroom 202'],
-      dayOfWeek: 'Tuesday',
-      startTime: '11:00',
-      endTime: '12:00',
-      subject: 'Operating Systems',
-      classSection: 'IT-2A',
-      facultyName: 'Prof. Nair',
-      semester: 3,
-    },
-    {
-      resourceId: byName['Classroom 202'],
-      dayOfWeek: 'Thursday',
-      startTime: '10:00',
-      endTime: '11:00',
-      subject: 'Computer Networks',
-      classSection: 'IT-3A',
-      facultyName: 'Prof. Menon',
-      semester: 5,
-    },
-    {
-      resourceId: byName['Networks Lab'],
-      dayOfWeek: 'Monday',
-      startTime: '14:00',
-      endTime: '16:00',
-      subject: 'Networks Lab',
-      classSection: 'CSE-3A',
-      facultyName: 'Dr. Sharma',
-      semester: 5,
-    },
-    {
-      resourceId: byName['Networks Lab'],
-      dayOfWeek: 'Wednesday',
-      startTime: '14:00',
-      endTime: '16:00',
-      subject: 'DBMS Lab',
-      classSection: 'CSE-2A',
-      facultyName: 'Dr. Rao',
-      semester: 3,
-    },
-    {
-      resourceId: byName['Main Auditorium'],
-      dayOfWeek: 'Thursday',
-      startTime: '15:00',
-      endTime: '17:00',
-      subject: 'Guest Lecture',
-      classSection: 'All',
-      facultyName: 'Dr. Gupta',
-      semester: 0,
-    },
-    {
-      resourceId: byName['Main Auditorium'],
-      dayOfWeek: 'Friday',
-      startTime: '10:00',
-      endTime: '12:00',
-      subject: 'Tech Fest Rehearsal',
-      classSection: 'All',
-      facultyName: 'Dr. Gupta',
-      semester: 0,
-    },
+    // Classroom 101 (CSE)
+    { resourceId: byName['Classroom 101'], dayOfWeek: 'Monday', startTime: '09:00', endTime: '10:00', subject: 'Data Structures', classSection: 'CSE-2A', facultyName: 'Dr. Sharma', semester: 3 },
+    { resourceId: byName['Classroom 101'], dayOfWeek: 'Tuesday', startTime: '09:00', endTime: '10:00', subject: 'Algorithms', classSection: 'CSE-2A', facultyName: 'Dr. Verma', semester: 3 },
+    { resourceId: byName['Classroom 101'], dayOfWeek: 'Wednesday', startTime: '09:00', endTime: '10:00', subject: 'DBMS', classSection: 'CSE-2B', facultyName: 'Dr. Rao', semester: 3 },
+    { resourceId: byName['Classroom 101'], dayOfWeek: 'Thursday', startTime: '09:00', endTime: '10:00', subject: 'Operating Systems', classSection: 'CSE-2A', facultyName: 'Dr. Sharma', semester: 3 },
+    { resourceId: byName['Classroom 101'], dayOfWeek: 'Friday', startTime: '09:00', endTime: '10:00', subject: 'Discrete Maths', classSection: 'CSE-2B', facultyName: 'Dr. Iyer', semester: 3 },
+
+    // Classroom 202 (IT)
+    { resourceId: byName['Classroom 202'], dayOfWeek: 'Monday', startTime: '10:00', endTime: '11:00', subject: 'Java Programming', classSection: 'IT-2A', facultyName: 'Prof. Iyer', semester: 3 },
+    { resourceId: byName['Classroom 202'], dayOfWeek: 'Tuesday', startTime: '11:00', endTime: '12:00', subject: 'Operating Systems', classSection: 'IT-2A', facultyName: 'Prof. Nair', semester: 3 },
+    { resourceId: byName['Classroom 202'], dayOfWeek: 'Wednesday', startTime: '10:00', endTime: '11:00', subject: 'Data Communication', classSection: 'IT-2B', facultyName: 'Prof. Menon', semester: 3 },
+    { resourceId: byName['Classroom 202'], dayOfWeek: 'Thursday', startTime: '10:00', endTime: '11:00', subject: 'Computer Networks', classSection: 'IT-3A', facultyName: 'Prof. Menon', semester: 5 },
+    { resourceId: byName['Classroom 202'], dayOfWeek: 'Friday', startTime: '11:00', endTime: '12:00', subject: 'Software Engineering', classSection: 'IT-3A', facultyName: 'Prof. Nair', semester: 5 },
+
+    // Networks Lab (CSE)
+    { resourceId: byName['Networks Lab'], dayOfWeek: 'Monday', startTime: '14:00', endTime: '16:00', subject: 'Networks Lab', classSection: 'CSE-3A', facultyName: 'Dr. Sharma', semester: 5 },
+    { resourceId: byName['Networks Lab'], dayOfWeek: 'Tuesday', startTime: '14:00', endTime: '16:00', subject: 'OS Lab', classSection: 'CSE-2A', facultyName: 'Dr. Rao', semester: 3 },
+    { resourceId: byName['Networks Lab'], dayOfWeek: 'Wednesday', startTime: '14:00', endTime: '16:00', subject: 'DBMS Lab', classSection: 'CSE-2A', facultyName: 'Dr. Rao', semester: 3 },
+    { resourceId: byName['Networks Lab'], dayOfWeek: 'Thursday', startTime: '14:00', endTime: '16:00', subject: 'Java Lab', classSection: 'CSE-2B', facultyName: 'Dr. Verma', semester: 3 },
+    { resourceId: byName['Networks Lab'], dayOfWeek: 'Friday', startTime: '14:00', endTime: '16:00', subject: 'Project Lab', classSection: 'CSE-3A', facultyName: 'Dr. Sharma', semester: 5 },
+
+    // Main Auditorium (Administration)
+    { resourceId: byName['Main Auditorium'], dayOfWeek: 'Monday', startTime: '15:00', endTime: '17:00', subject: 'Orientation Session', classSection: 'All', facultyName: 'Dr. Gupta', semester: 0 },
+    { resourceId: byName['Main Auditorium'], dayOfWeek: 'Tuesday', startTime: '15:00', endTime: '17:00', subject: 'Workshop', classSection: 'All', facultyName: 'Dr. Gupta', semester: 0 },
+    { resourceId: byName['Main Auditorium'], dayOfWeek: 'Wednesday', startTime: '10:00', endTime: '12:00', subject: 'Seminar', classSection: 'All', facultyName: 'Dr. Gupta', semester: 0 },
+    { resourceId: byName['Main Auditorium'], dayOfWeek: 'Thursday', startTime: '15:00', endTime: '17:00', subject: 'Guest Lecture', classSection: 'All', facultyName: 'Dr. Gupta', semester: 0 },
+    { resourceId: byName['Main Auditorium'], dayOfWeek: 'Friday', startTime: '10:00', endTime: '12:00', subject: 'Tech Fest Rehearsal', classSection: 'All', facultyName: 'Dr. Gupta', semester: 0 },
   ]
 
-  let count = 0
-  for (const entry of entries) {
-    await Timetable.findOneAndUpdate(
-      {
-        resourceId: entry.resourceId,
-        dayOfWeek: entry.dayOfWeek,
-        startTime: entry.startTime,
-        endTime: entry.endTime,
-      },
-      { ...entry, academicYear, effectiveFrom, isActive: true },
-      { upsert: true, setDefaultsOnInsert: true },
-    )
-    count += 1
-  }
-  logger.info(`${count} timetable entries seeded`)
+  // Reset to the canonical seed set each run rather than accumulating
+  // upserts across re-seeds with a changing entry list.
+  await Timetable.deleteMany({ resourceId: { $in: Object.values(byName) } })
+  await Timetable.insertMany(entries.map((entry) => ({ ...entry, academicYear, effectiveFrom, isActive: true })))
+
+  logger.info(`${entries.length} timetable entries seeded`)
 }
 
 const run = async () => {
