@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "server-api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "server"],
+      "port": 5000
+    },
+    {
+      "name": "server-worker",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "worker", "--prefix", "server"],
+      "port": 5000
+    }
+  ]
+}

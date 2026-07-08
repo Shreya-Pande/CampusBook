@@ -1,0 +1,1 @@
+test.todo('windowGuard tests — implement during Phase 11');
