@@ -13,6 +13,9 @@ import timetableRoutes from './routes/timetable.routes.js'
 import portalRoutes from './routes/portal.routes.js'
 import resourceRoutes from './routes/resource.routes.js'
 import bookingRoutes from './routes/booking.routes.js'
+import adminRoutes from './routes/admin.routes.js'
+import notificationRoutes from './routes/notification.routes.js'
+import waitlistRoutes from './routes/waitlist.routes.js'
 
 const app = express()
 
@@ -51,9 +54,9 @@ app.use('/api/timetable', timetableRoutes)
 app.use('/api/portal', portalRoutes)
 app.use('/api/resources', resourceRoutes)
 app.use('/api/bookings', bookingRoutes)
-
-// Remaining domain routes (admin, waitlist, notification) are mounted here
-// as each phase implements them.
+app.use('/api/admin', adminRoutes)
+app.use('/api/notifications', notificationRoutes)
+app.use('/api/waitlist', waitlistRoutes)
 
 app.use((req, res) => {
   return ApiResponse.error(res, `Route ${req.originalUrl} not found`, 404)
