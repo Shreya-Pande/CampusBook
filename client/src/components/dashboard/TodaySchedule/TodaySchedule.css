@@ -1,0 +1,14 @@
+.today-schedule {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.today-schedule-item {
+  background: var(--bg-surface) !important;
+  transition: transform 0.1s ease;
+}
+
+.today-schedule-item:hover {
+  transform: translateX(2px);
+}

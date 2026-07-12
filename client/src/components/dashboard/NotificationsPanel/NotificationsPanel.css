@@ -1,0 +1,33 @@
+.notifications-panel {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.notifications-panel .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.notifications-panel .text-gray-500,
+.notifications-panel .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.unread-badge {
+  animation: badge-pop 0.2s ease-out;
+}
+
+.notification-row.is-unread {
+  background: var(--accent-light);
+}
+
+@keyframes badge-pop {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

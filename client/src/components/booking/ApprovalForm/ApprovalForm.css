@@ -1,0 +1,68 @@
+.submit-button {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.submit-button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.approval-form .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.approval-form .text-gray-700,
+.approval-form .text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+.approval-form .booking-summary {
+  background: var(--bg-surface) !important;
+}
+
+.approval-form input,
+.approval-form textarea {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.approval-form input:focus,
+.approval-form textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.approval-form .border-gray-300 {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.approval-form button.border-gray-300:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.priority-option {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.priority-option.border-gray-300 {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.occupying-class-notice {
+  animation: notice-fade-in 0.2s ease-out;
+}
+
+@keyframes notice-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

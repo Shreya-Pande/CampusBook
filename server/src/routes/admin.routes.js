@@ -41,6 +41,7 @@ router.put(
   validate(updateRoutingRuleSchema),
   adminController.updateRoutingRule,
 )
+router.delete('/routing/:id', isSuperAdmin, adminController.deleteRoutingRule)
 
 router.get('/users', isSuperAdmin, adminController.getAllUsers)
 router.patch('/users/:id/approve', isSuperAdmin, adminController.approveAdminAccount)
@@ -52,6 +53,11 @@ router.patch(
 )
 
 router.get('/analytics/overview', adminController.getAnalyticsOverview)
+router.get('/analytics/utilization', adminController.getUtilization)
+router.get('/analytics/peak-times', adminController.getPeakHours)
+router.get('/analytics/departments', adminController.getDepartmentBreakdown)
+router.get('/analytics/portal-rush', adminController.getPortalRush)
+router.get('/analytics/hod-response-time', adminController.getHodResponseTime)
 router.get('/activity', adminController.getActivityLog)
 
 export default router

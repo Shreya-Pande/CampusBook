@@ -1,0 +1,18 @@
+.char-counter {
+  transition: color 0.15s ease;
+}
+
+.char-counter.text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+#reject-reason {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+#reject-reason:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}

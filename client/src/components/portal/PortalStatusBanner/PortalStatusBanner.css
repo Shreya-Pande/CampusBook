@@ -1,0 +1,20 @@
+.portal-status-banner {
+  animation: banner-fade-in 0.3s ease-out;
+}
+
+.add-to-calendar-link {
+  transition: opacity 0.15s ease;
+}
+
+.add-to-calendar-link:hover {
+  opacity: 0.8;
+}
+
+@keyframes banner-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

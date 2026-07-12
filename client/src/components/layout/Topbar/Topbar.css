@@ -1,0 +1,68 @@
+.topbar {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.topbar-search input {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.topbar-search input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+  background: var(--bg-surface) !important;
+}
+
+.notification-bell,
+.theme-toggle,
+.topbar button[aria-label='Log out'] {
+  color: var(--text-secondary) !important;
+  transition: background-color 0.15s ease;
+}
+
+.notification-bell:hover,
+.theme-toggle:hover,
+.topbar button[aria-label='Log out']:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.notification-badge {
+  animation: badge-pop 0.2s ease-out;
+}
+
+.topbar-user {
+  transition: background-color 0.15s ease;
+}
+
+.user-avatar {
+  background: var(--accent-light) !important;
+  color: var(--accent) !important;
+}
+
+.topbar-user p.text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.topbar-user p.text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+@keyframes badge-pop {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar-search {
+    display: none;
+  }
+}

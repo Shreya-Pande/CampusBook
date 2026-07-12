@@ -1,0 +1,15 @@
+.mini-calendar {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.mini-calendar-day {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.mini-calendar-day:hover {
+  transform: scale(1.05);
+}

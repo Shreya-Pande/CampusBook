@@ -1,0 +1,66 @@
+/* The sidebar stays a dark blue-slate shell in BOTH light and dark mode
+   (Linear/Notion/Vercel convention) — overriding the light-mode
+   bg-white/dark-mode dark:bg-gray-950 Tailwind utilities unconditionally. */
+.sidebar {
+  background: var(--sidebar-bg) !important;
+  border-color: var(--border-medium) !important;
+}
+
+.sidebar-link,
+.new-booking-btn {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.sidebar-link {
+  color: var(--sidebar-text) !important;
+}
+
+/* Active nav item — matches the `bg-indigo-50 text-indigo-700 ...` utility
+   set navLinkClass() applies when NavLink's isActive is true. */
+.sidebar-link.bg-indigo-50 {
+  background: var(--sidebar-item-active) !important;
+  color: var(--sidebar-text-active) !important;
+}
+
+/* Inactive nav item hover — matches the `text-gray-600 hover:bg-gray-100 ...`
+   utility set applied when isActive is false (also covers Settings/Support,
+   which share this exact class combination). */
+.sidebar-link.text-gray-600:hover {
+  background: var(--sidebar-item-hover) !important;
+  color: var(--sidebar-text-active) !important;
+}
+
+.sidebar-section-label {
+  letter-spacing: 0.05em;
+  color: var(--sidebar-text) !important;
+}
+
+.new-booking-btn {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.new-booking-btn:hover {
+  background: var(--accent-hover) !important;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 4.5rem;
+  }
+
+  .sidebar-section-label,
+  .sidebar-link-label,
+  .sidebar > div:first-child p {
+    display: none;
+  }
+
+  .sidebar-link,
+  .new-booking-btn {
+    justify-content: center;
+  }
+}

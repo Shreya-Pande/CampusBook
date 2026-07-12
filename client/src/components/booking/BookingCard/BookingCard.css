@@ -1,0 +1,36 @@
+.booking-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.booking-card:hover {
+  box-shadow: var(--shadow-md) !important;
+  border-color: var(--border-medium) !important;
+}
+
+.booking-card .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.booking-card .text-gray-500,
+.booking-card .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.booking-card button.border-gray-300 {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.booking-card button.border-gray-300:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.cancel-booking-btn {
+  transition: background-color 0.15s ease;
+}

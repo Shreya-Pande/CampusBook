@@ -32,10 +32,11 @@ const logActivity = async (req, action, resource, description) => {
 }
 
 export const getAllResources = async (req, res) => {
-  const { department, type, capacity, amenities, date, status } = req.query
+  const { department, building, type, capacity, amenities, date, status } = req.query
 
   const filter = {}
   if (department) filter.department = department
+  if (building) filter.building = building
   if (type) filter.type = type
   if (capacity) filter.capacity = { $gte: Number(capacity) }
   if (amenities) {

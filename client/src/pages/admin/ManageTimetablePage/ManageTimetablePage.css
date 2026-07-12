@@ -1,0 +1,56 @@
+.manage-timetable-page {
+  color: var(--text-primary);
+}
+
+.upload-result {
+  animation: upload-result-fade-in 0.2s ease-out;
+  background: var(--bg-surface) !important;
+  color: var(--text-secondary) !important;
+}
+
+.manage-timetable-page .rounded-2xl.border-gray-200 {
+  border-color: var(--border-subtle) !important;
+}
+
+.manage-timetable-page thead {
+  background: var(--bg-surface) !important;
+}
+
+.manage-timetable-page thead th {
+  color: var(--text-muted) !important;
+}
+
+.manage-timetable-page tbody tr {
+  border-color: var(--border-subtle) !important;
+}
+
+.manage-timetable-page tbody tr:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.manage-timetable-page .text-gray-900,
+.manage-timetable-page .text-gray-700 {
+  color: var(--text-primary) !important;
+}
+
+.manage-timetable-page input,
+.manage-timetable-page select {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.manage-timetable-page input:focus,
+.manage-timetable-page select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+@keyframes upload-result-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -4,6 +4,7 @@ import { verifyToken } from '../middleware/auth.middleware.js'
 import { authorize } from '../middleware/rbac.middleware.js'
 import { windowGuard } from '../middleware/windowGuard.middleware.js'
 import { validate } from '../middleware/validate.middleware.js'
+import { bookingLimiter } from '../middleware/rateLimit.middleware.js'
 import {
   instantBookingSchema,
   approvalBookingSchema,
@@ -20,6 +21,7 @@ router.use(windowGuard)
 
 router.post(
   '/instant',
+  bookingLimiter,
   authorize('cr_faculty'),
   validate(instantBookingSchema),
   bookingController.createInstant,
@@ -27,6 +29,7 @@ router.post(
 
 router.post(
   '/request',
+  bookingLimiter,
   authorize('cr_faculty'),
   validate(approvalBookingSchema),
   bookingController.createRequest,
@@ -34,6 +37,7 @@ router.post(
 
 router.post(
   '/multi-room',
+  bookingLimiter,
   authorize('cr_faculty'),
   validate(multiRoomBookingSchema),
   bookingController.createMultiRoom,

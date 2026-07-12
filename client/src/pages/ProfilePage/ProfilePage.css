@@ -1,0 +1,40 @@
+.profile-page {
+  color: var(--text-primary);
+}
+
+/* :not(.elite-booker-section) — that card is a deliberate indigo gradient,
+   not a neutral panel, so it must not get the flat bg-card treatment below. */
+.profile-page .rounded-2xl.border-gray-200:not(.elite-booker-section) {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.profile-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.profile-page .text-gray-500,
+.profile-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.elite-booker-section {
+  animation: profile-fade-in 0.25s ease-out;
+  border-color: var(--border-medium) !important;
+}
+
+.progress-fill {
+  transition: width 0.5s ease;
+}
+
+@keyframes profile-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

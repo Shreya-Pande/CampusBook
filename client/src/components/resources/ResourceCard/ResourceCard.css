@@ -1,0 +1,39 @@
+.resource-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md) !important;
+  border-color: var(--border-medium) !important;
+}
+
+.resource-card .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.resource-card .text-gray-500,
+.resource-card .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.resource-card .bg-gray-100 {
+  background: var(--bg-surface) !important;
+}
+
+.resource-action-button,
+.action-button-disabled {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.resource-action-button:hover {
+  transform: translateY(-1px);
+}

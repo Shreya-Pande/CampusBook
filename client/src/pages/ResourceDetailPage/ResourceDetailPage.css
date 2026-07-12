@@ -1,0 +1,63 @@
+.back-button {
+  transition: color 0.15s ease;
+  color: var(--text-secondary) !important;
+}
+
+.gallery-image {
+  transition: transform 0.2s ease;
+  background: var(--bg-surface) !important;
+}
+
+.amenity-chip {
+  transition: background-color 0.15s ease;
+  background: var(--bg-surface) !important;
+  color: var(--text-secondary) !important;
+}
+
+.calendar-wrap {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.calendar-wrap .fc {
+  font-family: inherit;
+}
+
+.calendar-wrap .fc-slot-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-wrap .fc-timegrid-event {
+  cursor: pointer;
+}
+
+.legend {
+  color: var(--text-secondary) !important;
+}
+
+.dark .calendar-wrap .fc {
+  --fc-border-color: var(--border-subtle);
+  --fc-button-bg-color: var(--accent);
+  --fc-button-border-color: var(--accent);
+  --fc-button-hover-bg-color: var(--accent-hover);
+  --fc-today-bg-color: var(--accent-light);
+  --fc-page-bg-color: var(--bg-card);
+  --fc-neutral-bg-color: var(--bg-surface);
+  --fc-list-event-hover-bg-color: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.legend span {
+  animation: legend-fade-in 0.2s ease-out;
+}
+
+@keyframes legend-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

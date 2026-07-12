@@ -1,0 +1,52 @@
+.approval-routing-page {
+  color: var(--text-primary);
+}
+
+.approval-routing-page table td {
+  vertical-align: middle;
+}
+
+.approval-routing-page .rounded-2xl.border-gray-200 {
+  border-color: var(--border-subtle) !important;
+}
+
+.approval-routing-page thead {
+  background: var(--bg-surface) !important;
+}
+
+.approval-routing-page thead th {
+  color: var(--text-muted) !important;
+}
+
+.approval-routing-page tbody tr {
+  border-color: var(--border-subtle) !important;
+}
+
+.approval-routing-page tbody tr:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.approval-routing-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.approval-routing-page .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.approval-routing-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.approval-routing-page input,
+.approval-routing-page select {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.approval-routing-page input:focus,
+.approval-routing-page select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}

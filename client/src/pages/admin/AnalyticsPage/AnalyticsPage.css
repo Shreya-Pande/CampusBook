@@ -1,0 +1,35 @@
+.analytics-page {
+  color: var(--text-primary);
+}
+
+.period-tab {
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.chart-card,
+.kpi-tile {
+  animation: analytics-fade-in 0.2s ease-out;
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.analytics-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.analytics-page .text-gray-500,
+.analytics-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+@keyframes analytics-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,14 @@
+.activity-feed {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: box-shadow 0.2s ease;
+}
+
+.activity-feed .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.activity-feed .text-gray-400 {
+  color: var(--text-muted) !important;
+}

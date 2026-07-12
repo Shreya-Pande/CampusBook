@@ -1,0 +1,31 @@
+.my-bookings-page {
+  color: var(--text-primary);
+}
+
+.booking-tab {
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.my-bookings-page .border-gray-200 {
+  border-color: var(--border-subtle) !important;
+}
+
+.my-bookings-page .text-gray-500,
+.my-bookings-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.empty-state {
+  animation: my-bookings-fade-in 0.2s ease-out;
+}
+
+@keyframes my-bookings-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

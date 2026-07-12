@@ -1,0 +1,45 @@
+.available-resources-page {
+  background: var(--bg-base) !important;
+  color: var(--text-primary) !important;
+}
+
+.available-resources-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.available-resources-page .text-gray-500,
+.available-resources-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.resource-tab {
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.breadcrumb a {
+  transition: color 0.15s ease;
+  color: var(--text-secondary);
+}
+
+.breadcrumb span {
+  color: var(--text-primary);
+}
+
+.view-toggle button {
+  transition: background-color 0.15s ease;
+}
+
+.empty-state {
+  animation: empty-fade-in 0.2s ease-out;
+}
+
+@keyframes empty-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

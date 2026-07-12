@@ -1,0 +1,25 @@
+.wishlist-button {
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+.wishlist-button:hover {
+  transform: scale(1.1);
+}
+
+.wishlist-button:active svg.is-saved {
+  animation: heart-pop 0.3s ease-out;
+}
+
+@keyframes heart-pop {
+  0% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

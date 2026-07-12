@@ -1,0 +1,58 @@
+.dashboard-page {
+  animation: dashboard-fade-in 0.25s ease-out;
+  color: var(--text-primary);
+}
+
+.dashboard-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.dashboard-page .text-gray-500,
+.dashboard-page .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.dashboard-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.quick-access-card,
+.export-report-btn {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.quick-access-card,
+.export-report-btn,
+.quick-book-btn {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.quick-access-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-medium) !important;
+}
+
+.export-report-btn:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.quick-book-btn:hover,
+.export-report-btn:hover {
+  transform: translateY(-1px);
+}
+
+@keyframes dashboard-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

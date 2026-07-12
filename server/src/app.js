@@ -22,7 +22,7 @@ const app = express()
 app.use(helmet())
 app.use(
   cors({
-    origin: env.clientUrl,
+    origin: [env.clientUrl, env.clientUrlProd].filter(Boolean),
     credentials: true,
   }),
 )
@@ -38,14 +38,26 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
   const mongodb = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-  const redisStatus = redis.status === 'ready' ? 'connected' : 'disconnected'
+
+  // An actual PING round-trip catches a stale/half-open connection that
+  // ioredis's cached .status property wouldn't — Render's health probe
+  // needs a real liveness check, not just "we connected at some point".
+  let redisStatus
+  try {
+    redisStatus = (await redis.ping()) === 'PONG' ? 'connected' : 'disconnected'
+  } catch {
+    redisStatus = 'disconnected'
+  }
+
+  const isHealthy = mongodb === 'connected' && redisStatus === 'connected'
 
   return ApiResponse.success(
     res,
     { uptime: process.uptime(), mongodb, redis: redisStatus },
-    'Server is healthy',
+    isHealthy ? 'Server is healthy' : 'Server is degraded',
+    isHealthy ? 200 : 503,
   )
 })
 

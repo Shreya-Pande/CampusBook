@@ -1,0 +1,58 @@
+.submit-button {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.submit-button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.booking-summary {
+  animation: summary-fade-in 0.2s ease-out;
+  background: var(--bg-surface) !important;
+}
+
+.instant-booking-form .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.instant-booking-form .text-gray-700,
+.instant-booking-form .text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+.instant-booking-form .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.instant-booking-form input,
+.instant-booking-form textarea {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.instant-booking-form input:focus,
+.instant-booking-form textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.instant-booking-form .border-gray-300 {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.instant-booking-form button.border-gray-300:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+@keyframes summary-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

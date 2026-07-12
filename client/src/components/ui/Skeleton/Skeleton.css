@@ -1,0 +1,19 @@
+.skeleton {
+  background: linear-gradient(90deg, rgb(229 231 235) 25%, rgb(209 213 219) 37%, rgb(229 231 235) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, rgb(31 41 55) 25%, rgb(55 65 81) 37%, rgb(31 41 55) 63%);
+  background-size: 400% 100%;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}

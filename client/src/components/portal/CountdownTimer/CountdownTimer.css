@@ -1,0 +1,14 @@
+.countdown-timer {
+  letter-spacing: 0.05em;
+  animation: countdown-tick 1s steps(1) infinite;
+}
+
+@keyframes countdown-tick {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.92;
+  }
+}

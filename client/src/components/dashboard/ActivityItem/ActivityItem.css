@@ -1,0 +1,22 @@
+.activity-item:not(:last-child) {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.activity-item .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.activity-item .text-gray-500,
+.activity-item .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.activity-action {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.activity-action:hover {
+  transform: translateY(-1px);
+}

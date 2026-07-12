@@ -1,0 +1,21 @@
+.app-layout {
+  display: flex;
+  min-height: 100svh;
+  width: 100%;
+  background: var(--bg-base);
+}
+
+.app-layout__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--bg-base);
+}
+
+.app-layout__main {
+  flex: 1 1 auto;
+  padding: 24px;
+  background: var(--bg-base);
+  color: var(--text-primary);
+}

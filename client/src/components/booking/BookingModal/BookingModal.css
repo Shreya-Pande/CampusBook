@@ -1,0 +1,13 @@
+.closed-message {
+  animation: closed-fade-in 0.2s ease-out;
+  color: var(--text-secondary) !important;
+}
+
+@keyframes closed-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -24,6 +24,12 @@ export default defineConfig([
     settings: {
       react: { version: 'detect' },
     },
+    rules: {
+      // Project doesn't use the prop-types package anywhere — enforcing
+      // this rule would mean either adding that dependency or sprinkling
+      // per-component disable comments across every prop-accepting file.
+      'react/prop-types': 'off',
+    },
   },
   prettierConfig,
 ])

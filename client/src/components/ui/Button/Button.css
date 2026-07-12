@@ -1,0 +1,30 @@
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.btn {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease,
+    opacity 0.15s ease;
+}
+
+/* secondary variant */
+.btn.border-gray-300 {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.btn.border-gray-300:not(:disabled):hover {
+  background: var(--bg-card-hover) !important;
+}
+
+/* ghost variant */
+.btn.text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.btn.text-gray-600:not(:disabled):hover {
+  background: var(--bg-card-hover) !important;
+}

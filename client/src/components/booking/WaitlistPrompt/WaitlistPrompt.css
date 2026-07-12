@@ -1,0 +1,41 @@
+.clock-icon {
+  animation: clock-tick 1.5s ease-in-out infinite;
+}
+
+.submit-button {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.submit-button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.waitlist-prompt .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.waitlist-prompt .text-gray-600,
+.waitlist-prompt .text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+.waitlist-prompt .border-gray-300 {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.waitlist-prompt button.border-gray-300:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+@keyframes clock-tick {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}

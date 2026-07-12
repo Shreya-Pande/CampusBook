@@ -1,0 +1,77 @@
+.booking-requests-page {
+  color: var(--text-primary);
+}
+
+.request-tab {
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Table shell shared across every admin page: rounded card border, striped
+   header, row hover, and cell text colors all map onto the unified system. */
+.booking-requests-page .rounded-2xl.border-gray-200 {
+  border-color: var(--border-subtle) !important;
+}
+
+.booking-requests-page thead {
+  background: var(--bg-surface) !important;
+}
+
+.booking-requests-page thead th {
+  color: var(--text-muted) !important;
+}
+
+.booking-requests-page tbody tr {
+  border-color: var(--border-subtle) !important;
+}
+
+.booking-requests-page tbody tr:hover {
+  background: var(--bg-card-hover) !important;
+}
+
+.booking-requests-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.booking-requests-page .text-gray-700,
+.booking-requests-page .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.booking-requests-page .text-gray-500,
+.booking-requests-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.booking-requests-page tbody tr.bg-gray-50 {
+  background: var(--bg-surface) !important;
+}
+
+.expiry-banner {
+  animation: expiry-banner-fade-in 0.2s ease-out;
+}
+
+.empty-state {
+  animation: requests-fade-in 0.2s ease-out;
+}
+
+@keyframes expiry-banner-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes requests-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

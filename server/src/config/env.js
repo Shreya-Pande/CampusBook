@@ -34,6 +34,9 @@ const envSchema = Joi.object({
   SUPER_ADMIN_PASSWORD: Joi.string().min(8).required(),
 
   CLIENT_URL: Joi.string().uri().required(),
+  // Optional — won't exist until after the first Vercel deploy, so it can't
+  // be required at boot. Once set, app.js's CORS config allows it too.
+  CLIENT_URL_PROD: Joi.string().uri().optional().allow(''),
 }).unknown(true)
 
 const { error, value: validatedEnv } = envSchema.validate(process.env, {
@@ -75,6 +78,7 @@ export const env = {
   },
 
   clientUrl: validatedEnv.CLIENT_URL,
+  clientUrlProd: validatedEnv.CLIENT_URL_PROD || null,
 }
 
 export default env

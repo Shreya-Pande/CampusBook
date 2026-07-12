@@ -1,0 +1,75 @@
+.login-page {
+  background: var(--bg-base) !important;
+}
+
+.login-card {
+  animation: login-card-in 0.35s ease-out;
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.login-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.login-page .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.login-page .text-gray-500,
+.login-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.form-input {
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.form-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.form-error {
+  animation: shake 0.3s ease-in-out;
+}
+
+.login-submit {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.login-submit:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+@keyframes login-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}

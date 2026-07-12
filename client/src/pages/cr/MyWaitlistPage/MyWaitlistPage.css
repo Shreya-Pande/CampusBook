@@ -1,0 +1,58 @@
+.my-waitlist-page {
+  color: var(--text-primary);
+}
+
+.waitlist-entry {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.waitlist-entry:hover {
+  box-shadow: var(--shadow-md) !important;
+  border-color: var(--border-medium) !important;
+}
+
+.waitlist-entry .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.waitlist-entry .text-gray-500,
+.waitlist-entry .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.waitlist-entry button.border-gray-300 {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
+
+.offer-countdown {
+  animation: waitlist-pulse 1.5s ease-in-out infinite;
+}
+
+.empty-state {
+  animation: waitlist-fade-in 0.2s ease-out;
+}
+
+@keyframes waitlist-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes waitlist-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

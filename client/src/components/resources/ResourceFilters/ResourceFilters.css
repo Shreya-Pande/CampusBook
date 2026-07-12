@@ -1,0 +1,41 @@
+.resource-filters {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.resource-filters h3,
+.resource-filters label[for] {
+  color: var(--text-primary) !important;
+}
+
+.resource-filters label {
+  color: var(--text-secondary) !important;
+}
+
+.resource-filters select {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.resource-filters select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.filter-checkbox {
+  cursor: pointer;
+}
+
+.capacity-slider {
+  cursor: pointer;
+}
+
+.resource-filters label {
+  transition: color 0.15s ease;
+}
+
+.resource-filters label:hover {
+  color: var(--accent) !important;
+}

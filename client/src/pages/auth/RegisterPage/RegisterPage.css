@@ -1,0 +1,79 @@
+.register-page {
+  background: var(--bg-base) !important;
+}
+
+.register-card {
+  animation: register-card-in 0.35s ease-out;
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.register-page .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.register-page .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.register-page .text-gray-500,
+.register-page .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.register-tabs {
+  background: var(--bg-surface) !important;
+}
+
+.register-tabs button {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.register-tabs button.bg-white {
+  background: var(--bg-card) !important;
+  color: var(--accent) !important;
+}
+
+.form-input {
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.form-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.register-submit {
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.register-submit:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+@keyframes register-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 400px) {
+  .register-card {
+    padding: 1.5rem;
+  }
+}

@@ -54,14 +54,23 @@ export const getMyBookings = async (req, res) => {
   const filter = { userId: req.user.id }
   if (status) filter.status = status
 
-  const bookings = await Booking.find(filter).sort({ date: 1, startTime: 1 })
+  const bookings = await Booking.find(filter)
+    .populate('resourceIds', 'name type department building floor')
+    .populate('assignedApproverId', 'name')
+    .sort({ date: 1, startTime: 1 })
   return ApiResponse.success(res, { bookings }, 'Bookings fetched')
 }
 
 export const getMyAllBookings = async (req, res) => {
   const [current, archived] = await Promise.all([
-    Booking.find({ userId: req.user.id }).sort({ date: -1 }),
-    BookingArchive.find({ userId: req.user.id }).sort({ date: -1 }),
+    Booking.find({ userId: req.user.id })
+      .populate('resourceIds', 'name type department building floor')
+      .populate('assignedApproverId', 'name')
+      .sort({ date: -1 }),
+    BookingArchive.find({ userId: req.user.id })
+      .populate('resourceIds', 'name type department building floor')
+      .populate('assignedApproverId', 'name')
+      .sort({ date: -1 }),
   ])
 
   return ApiResponse.success(res, { current, archived }, 'All bookings fetched')

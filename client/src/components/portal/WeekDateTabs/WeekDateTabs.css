@@ -1,0 +1,16 @@
+.week-date-tab:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.week-date-tab {
+  transition:
+    transform 0.1s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.week-date-tab.bg-white {
+  background: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-secondary) !important;
+}
