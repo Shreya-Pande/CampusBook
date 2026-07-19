@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 import { env } from './config/env.js'
 import redis from './config/redis.js'
 import logger from './utils/logger.js'
@@ -27,7 +28,6 @@ app.use(
   }),
 )
 
-// Global rate limit — tightened per-route (e.g. booking) in later phases
 app.use('/api', globalLimiter)
 
 app.use(express.json())
@@ -41,9 +41,6 @@ app.use((req, res, next) => {
 app.get('/api/health', async (req, res) => {
   const mongodb = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
 
-  // An actual PING round-trip catches a stale/half-open connection that
-  // ioredis's cached .status property wouldn't — Render's health probe
-  // needs a real liveness check, not just "we connected at some point".
   let redisStatus
   try {
     redisStatus = (await redis.ping()) === 'PONG' ? 'connected' : 'disconnected'
@@ -61,6 +58,157 @@ app.get('/api/health', async (req, res) => {
   )
 })
 
+app.get('/api/seed-now', async (req, res) => {
+  if (req.query.secret !== 'campusbook2025') {
+    return res.status(403).json({ message: 'Forbidden' })
+  }
+  try {
+    const { default: User } = await import('./models/User.js')
+    const { default: Resource } = await import('./models/Resource.js')
+    const { default: Timetable } = await import('./models/Timetable.js')
+
+    // Super admin
+    const existing = await User.findOne({ adminType: 'super_admin' })
+    if (!existing) {
+      const hashed = await bcrypt.hash('SuperAdmin@2025', 10)
+      await User.create({
+        name: 'Super Admin',
+        email: 'superadmin@college.edu',
+        password: hashed,
+        role: 'admin',
+        adminType: 'super_admin',
+        department: 'Administration',
+        designation: 'Dept Admin',
+        isApproved: true,
+      })
+      logger.info('Super admin created')
+    } else {
+      logger.info('Super admin already exists, skipping')
+    }
+
+    // HODs
+    const hods = [
+      { name: 'CSE HOD', email: 'hod.cse@college.edu', department: 'CSE' },
+      { name: 'IT HOD', email: 'hod.it@college.edu', department: 'IT' },
+    ]
+    for (const hod of hods) {
+      const exists = await User.findOne({ email: hod.email })
+      if (!exists) {
+        const hashed = await bcrypt.hash('SuperAdmin@2025', 10)
+        await User.create({
+          ...hod,
+          password: hashed,
+          role: 'admin',
+          adminType: 'hod',
+          designation: 'HOD',
+          isApproved: true,
+        })
+        logger.info(`HOD created: ${hod.email}`)
+      } else {
+        logger.info(`HOD already exists: ${hod.email}, skipping`)
+      }
+    }
+
+    // Resources
+    await Resource.deleteMany({})
+    const resourceDocs = await Resource.insertMany([
+      {
+        name: 'Classroom 101',
+        type: 'classroom',
+        department: 'CSE',
+        building: 'A Block',
+        floor: 'Lvl 1',
+        capacity: 60,
+        amenities: ['projector', 'whiteboard'],
+        requiresApprovalAlways: false,
+        status: 'active',
+        isActive: true,
+      },
+      {
+        name: 'Classroom 202',
+        type: 'classroom',
+        department: 'IT',
+        building: 'B Block',
+        floor: 'Lvl 2',
+        capacity: 50,
+        amenities: ['projector', 'ac'],
+        requiresApprovalAlways: false,
+        status: 'active',
+        isActive: true,
+      },
+      {
+        name: 'Main Auditorium',
+        type: 'auditorium',
+        department: 'Administration',
+        building: 'Main Block',
+        floor: 'Lvl Ground',
+        capacity: 300,
+        amenities: ['projector', 'ac', 'whiteboard'],
+        requiresApprovalAlways: true,
+        status: 'active',
+        isActive: true,
+      },
+      {
+        name: 'Networks Lab',
+        type: 'lab',
+        department: 'CSE',
+        building: 'A Block',
+        floor: 'Lvl 3',
+        capacity: 30,
+        amenities: ['computers', 'ac', 'projector'],
+        requiresApprovalAlways: true,
+        status: 'active',
+        isActive: true,
+      },
+    ])
+    logger.info(`${resourceDocs.length} resources seeded`)
+
+    // Timetable
+    await Timetable.deleteMany({})
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    const classrooms = resourceDocs.filter((r) => r.type === 'classroom')
+    const entries = []
+    for (const room of classrooms) {
+      for (const day of days) {
+        entries.push({
+          resourceId: room._id,
+          dayOfWeek: day,
+          startTime: '09:00',
+          endTime: '10:00',
+          subject: 'Data Structures',
+          classSection: 'CSE-3A',
+          facultyName: 'Dr. Sharma',
+          semester: 3,
+          academicYear: '2025-26',
+          isActive: true,
+        })
+        entries.push({
+          resourceId: room._id,
+          dayOfWeek: day,
+          startTime: '11:00',
+          endTime: '12:00',
+          subject: 'Algorithms',
+          classSection: 'CSE-4B',
+          facultyName: 'Dr. Gupta',
+          semester: 4,
+          academicYear: '2025-26',
+          isActive: true,
+        })
+      }
+    }
+    await Timetable.insertMany(entries)
+    logger.info(`${entries.length} timetable entries seeded`)
+
+    return res.json({
+      success: true,
+      message: `Seeded successfully: 1 super admin, 2 HODs, ${resourceDocs.length} resources, ${entries.length} timetable entries`,
+    })
+  } catch (err) {
+    logger.error(`Seed endpoint error: ${err.message}`)
+    return res.status(500).json({ success: false, error: err.message })
+  }
+})
+
 app.use('/api/auth', authRoutes)
 app.use('/api/timetable', timetableRoutes)
 app.use('/api/portal', portalRoutes)
@@ -69,24 +217,6 @@ app.use('/api/bookings', bookingRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/waitlist', waitlistRoutes)
-
-
-app.get('/api/seed-now', async (req, res) => {
-  if (req.query.secret !== 'campusbook2025') {
-    return res.status(403).json({ message: 'Forbidden' });
-  }
-  try {
-    const { default: runSeed } = await import('../scripts/seed.js');
-    await runSeed();
-    return res.json({ success: true, message: 'Database seeded successfully' });
-  } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-
-
-
 
 app.use((req, res) => {
   return ApiResponse.error(res, `Route ${req.originalUrl} not found`, 404)
