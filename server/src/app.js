@@ -70,6 +70,24 @@ app.use('/api/admin', adminRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/waitlist', waitlistRoutes)
 
+
+app.get('/api/seed-now', async (req, res) => {
+  if (req.query.secret !== 'campusbook2025') {
+    return res.status(403).json({ message: 'Forbidden' });
+  }
+  try {
+    const { default: runSeed } = await import('../scripts/seed.js');
+    await runSeed();
+    return res.json({ success: true, message: 'Database seeded successfully' });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
+
+
+
 app.use((req, res) => {
   return ApiResponse.error(res, `Route ${req.originalUrl} not found`, 404)
 })
