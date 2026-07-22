@@ -3,7 +3,8 @@ import WeeklyPortalWindow from '../models/WeeklyPortalWindow.js'
 import User from '../models/User.js'
 import ActivityLog from '../models/ActivityLog.js'
 import { ApiResponse } from '../utils/apiResponse.js'
-import { getFriday5PM, getSunday12PM } from '../utils/timeUtils.js'
+import { getSunday12PM } from '../utils/timeUtils.js'
+import { getCurrentWeekBounds } from '../jobs/portalWindow.cron.js'
 
 export const getStatus = async (req, res) => {
   const status = (await redis.get('portal:status')) || 'closed'
@@ -44,13 +45,21 @@ export const getCurrentWeek = async (req, res) => {
 }
 
 export const overrideOpen = async (req, res) => {
+  const { lastSunday, thisMonday, thisFriday } = getCurrentWeekBounds()
+
   await redis.set('portal:status', 'open')
-  await redis.set('portal:next_close', getFriday5PM().toISOString())
+  await redis.set('portal:next_close', thisFriday.toISOString())
 
   const window = await WeeklyPortalWindow.findOneAndUpdate(
-    { status: 'upcoming' },
-    { status: 'open' },
-    { sort: { weekStartDate: 1 }, returnDocument: 'after' },
+    { weekStartDate: thisMonday },
+    {
+      weekStartDate: thisMonday,
+      weekEndDate: thisFriday,
+      portalOpensAt: lastSunday,
+      portalClosesAt: thisFriday,
+      status: 'open',
+    },
+    { upsert: true, returnDocument: 'after' },
   )
 
   const actor = await User.findById(req.user.id).select('name role adminType')

@@ -195,15 +195,69 @@ export const sendUpcomingReminders = async () => {
   if (upcoming.length) logger.info(`Sent ${upcoming.length} 1-hour booking reminders`)
 }
 
+// Boundaries of the current week's Sun 12PM -> Fri 5PM portal window,
+// anchored on whichever Sunday most recently started (or is starting) it.
+// Shared by initializePortalWindow and the overrideOpen emergency-open
+// endpoint so both compute the same week's dates the same way.
+export const getCurrentWeekBounds = (from = new Date()) => {
+  const lastSunday = new Date(from)
+  lastSunday.setDate(from.getDate() - from.getDay())
+  lastSunday.setHours(12, 0, 0, 0)
+
+  const thisMonday = startOfDay(new Date(lastSunday))
+  thisMonday.setDate(lastSunday.getDate() + 1)
+
+  const fridayRaw = new Date(lastSunday)
+  fridayRaw.setDate(lastSunday.getDate() + 5)
+  const thisFriday = getFriday5PM(fridayRaw)
+
+  return { lastSunday, thisMonday, thisFriday }
+}
+
+const createOpenWindowForCurrentWeek = async (from = new Date()) => {
+  const { lastSunday, thisMonday, thisFriday } = getCurrentWeekBounds(from)
+
+  const facultyOpenTime = new Date(lastSunday)
+  facultyOpenTime.setMinutes(facultyOpenTime.getMinutes() - 15)
+
+  const window = await WeeklyPortalWindow.create({
+    weekStartDate: thisMonday,
+    weekEndDate: thisFriday,
+    portalOpensAt: lastSunday,
+    portalClosesAt: thisFriday,
+    roleOpenTimes: {
+      faculty: facultyOpenTime,
+      cr_faculty: lastSunday,
+    },
+    status: 'open',
+  })
+
+  await redis.set('portal:status', 'open')
+  await redis.set('portal:next_close', thisFriday.toISOString())
+
+  return window
+}
+
 // Runs once on server startup. A server restart mid-week has no in-memory
 // state, so Redis's portal:status key and the DB's 'open' WeeklyPortalWindow
 // (normally kept in sync by openPortal/closePortalAndExpire) can both be
 // missing even though the portal should currently be open — this rebuilds
 // that state from scratch instead of waiting for the next scheduled cron.
 export const initializePortalWindow = async () => {
+  const now = new Date()
   const cachedStatus = await redis.get('portal:status')
+
   if (cachedStatus === 'open') {
-    logger.info('Portal window init: Redis already reports open, nothing to do')
+    const openWindow = await WeeklyPortalWindow.findOne({ status: 'open' })
+    if (openWindow) {
+      logger.info('Portal window init: Redis already reports open and DB is in sync, nothing to do')
+      return
+    }
+
+    const window = await createOpenWindowForCurrentWeek(now)
+    logger.info(
+      `Portal window init: Redis reported open but no open window existed in DB — created window for week starting ${window.weekStartDate.toDateString()}`,
+    )
     return
   }
 
@@ -217,36 +271,10 @@ export const initializePortalWindow = async () => {
     return
   }
 
-  const now = new Date()
-  const lastSunday = new Date(now)
-  lastSunday.setDate(now.getDate() - now.getDay())
-  lastSunday.setHours(12, 0, 0, 0)
-
-  const thisMonday = startOfDay(new Date(lastSunday))
-  thisMonday.setDate(lastSunday.getDate() + 1)
-
-  const fridayRaw = new Date(lastSunday)
-  fridayRaw.setDate(lastSunday.getDate() + 5)
-  const thisFriday = getFriday5PM(fridayRaw)
+  const { lastSunday, thisFriday } = getCurrentWeekBounds(now)
 
   if (now >= lastSunday && now <= thisFriday) {
-    const facultyOpenTime = new Date(lastSunday)
-    facultyOpenTime.setMinutes(facultyOpenTime.getMinutes() - 15)
-
-    const window = await WeeklyPortalWindow.create({
-      weekStartDate: thisMonday,
-      weekEndDate: thisFriday,
-      portalOpensAt: lastSunday,
-      portalClosesAt: thisFriday,
-      roleOpenTimes: {
-        faculty: facultyOpenTime,
-        cr_faculty: lastSunday,
-      },
-      status: 'open',
-    })
-
-    await redis.set('portal:status', 'open')
-    await redis.set('portal:next_close', thisFriday.toISOString())
+    const window = await createOpenWindowForCurrentWeek(now)
     logger.info(
       `Portal window init: no open window found but current time is within this week's window — created and opened window for week starting ${window.weekStartDate.toDateString()}`,
     )
