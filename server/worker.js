@@ -1,13 +1,14 @@
 import connectDB from './src/config/db.js'
 import './src/config/redis.js'
 import logger from './src/utils/logger.js'
-import { startPortalWindowCrons } from './src/jobs/portalWindow.cron.js'
+import { initializePortalWindow, startPortalWindowCrons } from './src/jobs/portalWindow.cron.js'
 import { startWaitlistExpiryCron } from './src/jobs/waitlistExpiry.cron.js'
 import './src/queues/notification.worker.js'
 
 const startWorker = async () => {
   await connectDB()
 
+  await initializePortalWindow()
   startPortalWindowCrons()
   startWaitlistExpiryCron()
 

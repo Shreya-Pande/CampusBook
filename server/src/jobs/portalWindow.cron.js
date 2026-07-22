@@ -195,6 +195,70 @@ export const sendUpcomingReminders = async () => {
   if (upcoming.length) logger.info(`Sent ${upcoming.length} 1-hour booking reminders`)
 }
 
+// Runs once on server startup. A server restart mid-week has no in-memory
+// state, so Redis's portal:status key and the DB's 'open' WeeklyPortalWindow
+// (normally kept in sync by openPortal/closePortalAndExpire) can both be
+// missing even though the portal should currently be open — this rebuilds
+// that state from scratch instead of waiting for the next scheduled cron.
+export const initializePortalWindow = async () => {
+  const cachedStatus = await redis.get('portal:status')
+  if (cachedStatus === 'open') {
+    logger.info('Portal window init: Redis already reports open, nothing to do')
+    return
+  }
+
+  const openWindow = await WeeklyPortalWindow.findOne({ status: 'open' })
+  if (openWindow) {
+    await redis.set('portal:status', 'open')
+    await redis.set('portal:next_close', openWindow.portalClosesAt.toISOString())
+    logger.info(
+      `Portal window init: found open window in DB (week starting ${openWindow.weekStartDate.toDateString()}), synced Redis`,
+    )
+    return
+  }
+
+  const now = new Date()
+  const lastSunday = new Date(now)
+  lastSunday.setDate(now.getDate() - now.getDay())
+  lastSunday.setHours(12, 0, 0, 0)
+
+  const thisMonday = startOfDay(new Date(lastSunday))
+  thisMonday.setDate(lastSunday.getDate() + 1)
+
+  const fridayRaw = new Date(lastSunday)
+  fridayRaw.setDate(lastSunday.getDate() + 5)
+  const thisFriday = getFriday5PM(fridayRaw)
+
+  if (now >= lastSunday && now <= thisFriday) {
+    const facultyOpenTime = new Date(lastSunday)
+    facultyOpenTime.setMinutes(facultyOpenTime.getMinutes() - 15)
+
+    const window = await WeeklyPortalWindow.create({
+      weekStartDate: thisMonday,
+      weekEndDate: thisFriday,
+      portalOpensAt: lastSunday,
+      portalClosesAt: thisFriday,
+      roleOpenTimes: {
+        faculty: facultyOpenTime,
+        cr_faculty: lastSunday,
+      },
+      status: 'open',
+    })
+
+    await redis.set('portal:status', 'open')
+    await redis.set('portal:next_close', thisFriday.toISOString())
+    logger.info(
+      `Portal window init: no open window found but current time is within this week's window — created and opened window for week starting ${window.weekStartDate.toDateString()}`,
+    )
+    return
+  }
+
+  const nextOpen = getSunday12PM(now)
+  await redis.set('portal:status', 'closed')
+  await redis.set('portal:next_open', nextOpen.toISOString())
+  logger.info(`Portal window init: outside weekly window, portal closed until ${nextOpen.toDateString()}`)
+}
+
 export const startPortalWindowCrons = () => {
   cron.schedule('55 11 * * 0', preGenerateNextWeek) // Sunday 11:55 AM
   cron.schedule('0 12 * * 0', openPortal) // Sunday 12:00 PM

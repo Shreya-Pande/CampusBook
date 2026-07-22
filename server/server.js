@@ -10,9 +10,12 @@ const startServer = async () => {
   // Start cron jobs and notification worker in same process
   // (acceptable for free-tier deployment — separate worker for paid plans)
   try {
-    const { startPortalWindowCrons } = await import('./src/jobs/portalWindow.cron.js')
+    const { initializePortalWindow, startPortalWindowCrons } = await import(
+      './src/jobs/portalWindow.cron.js'
+    )
     const { startWaitlistExpiryCron } = await import('./src/jobs/waitlistExpiry.cron.js')
     await import('./src/queues/notification.worker.js')
+    await initializePortalWindow()
     startPortalWindowCrons()
     startWaitlistExpiryCron()
     logger.info('Cron jobs and notification worker started')
