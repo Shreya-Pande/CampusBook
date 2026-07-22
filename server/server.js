@@ -1,14 +1,28 @@
-import app from './src/app.js'
-import { env } from './src/config/env.js'
-import connectDB from './src/config/db.js'
+import { connectDB } from './src/config/db.js'
 import './src/config/redis.js'
 import logger from './src/utils/logger.js'
+import app from './src/app.js'
+import { env } from './src/config/env.js'
 
 const startServer = async () => {
   await connectDB()
 
-  const server = app.listen(env.port, () => {
-    logger.info(`Server running on port ${env.port}`)
+  // Start cron jobs and notification worker in same process
+  // (acceptable for free-tier deployment — separate worker for paid plans)
+  try {
+    const { startPortalWindowCrons } = await import('./src/jobs/portalWindow.cron.js')
+    const { startWaitlistExpiryCron } = await import('./src/jobs/waitlistExpiry.cron.js')
+    await import('./src/queues/notification.worker.js')
+    startPortalWindowCrons()
+    startWaitlistExpiryCron()
+    logger.info('Cron jobs and notification worker started')
+  } catch (err) {
+    logger.warn(`Worker startup warning: ${err.message}`)
+  }
+
+  const port = env.port || 5000
+  const server = app.listen(port, () => {
+    logger.info(`Server running on port ${port}`)
   })
 
   const shutdown = (signal) => {
