@@ -6,6 +6,10 @@
   border-color: var(--border-medium) !important;
 }
 
+.sidebar-logo {
+  cursor: pointer;
+}
+
 .sidebar-link,
 .new-booking-btn {
   transition:

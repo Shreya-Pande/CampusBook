@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import {
   BarChart3,
   BookOpen,
@@ -69,10 +69,10 @@ const Sidebar = () => {
   return (
     <aside className="sidebar flex w-64 shrink-0 flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="px-5 py-6">
-        <div className="flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-gray-100">
+        <Link to="/" className="sidebar-logo flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-gray-100">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">C</span>
           CampusBook
-        </div>
+        </Link>
         <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">Smart campus booking</p>
       </div>
 
